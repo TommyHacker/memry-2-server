@@ -45,3 +45,13 @@ exports.login = async (req, res) => {
 		res.send({ success: false, message: 'error during login' });
 	}
 };
+
+exports.getUserData = async (req, res) => {
+	try {
+		const user = await User.findById(res.locals.currentUser.id);
+		res.json({ success: true, data: user });
+	} catch (err) {
+		console.log(err.message);
+		res.json({ success: false, message: 'not allowed.' });
+	}
+};
