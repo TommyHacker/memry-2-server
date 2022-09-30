@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { login, register } = require('../controllers/userControllers');
+const {
+	login,
+	register,
+	getUserData,
+} = require('../controllers/userControllers');
 const { gateKeeper } = require('../helpers/gateKeeper');
 
 router.post('/register', register);

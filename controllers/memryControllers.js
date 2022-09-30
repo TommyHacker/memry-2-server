@@ -1,7 +1,7 @@
 const Memry = require('../models/memrySchema');
 
 const doorman = (element) => {
-	if (!element.private || element.authorId == currentUser.id) return element;
+	if (!element.privacy || element.authorId == currentUser.id) return element;
 	return false;
 };
 
@@ -25,14 +25,14 @@ exports.getOne = async (req, res) => {
 
 exports.postOne = async (req, res) => {
 	try {
-		const { title, story, imageUrl, private, longitude, latitude } = req.body;
+		const { title, story, imageUrl, privacy, longitude, latitude } = req.body;
 		const memry = new Memry({
 			title,
 			story,
 			imageUrl,
 			longitude,
 			latitude,
-			private,
+			privacy,
 			authorId: currentUser.id,
 		});
 		await memry.save();
@@ -53,7 +53,7 @@ exports.postOne = async (req, res) => {
 exports.patchOne = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { private, title, story, imageUrl, longitude, latitude } = req.body;
+		const { privacy, title, story, imageUrl, longitude, latitude } = req.body;
 		const foundMemry = await Memry.findById(id);
 		if (currentUser.id != memry.authorId)
 			return res.json({ success: false, message: 'not allowed.' });
@@ -61,7 +61,7 @@ exports.patchOne = async (req, res) => {
 			foundMemry,
 			title,
 			story,
-			private,
+			privacy,
 			imageUrl,
 			longitude,
 			latitude,
@@ -81,7 +81,7 @@ exports.deleteOne = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const foundMemry = await Memry.findById(id);
-		if (!memry.authorId == currentUser.id)
+		if (!memry.authorId == currentUser.id || !currentUser.isAdmin)
 			return res.json({ success: false, message: 'not allowed.' });
 
 		await Memry.findByIdAndDelete(id);

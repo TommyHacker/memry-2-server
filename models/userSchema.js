@@ -18,6 +18,11 @@ const UserSchema = new Schema(
 			required: true,
 			select: false,
 		},
+		isAdmin: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
 	},
 	{ timestamps: true }
 );

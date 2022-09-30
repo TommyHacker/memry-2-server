@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const MemrySchema = new Schema(
 	{
+		authorId: {
+			type: String,
+			required: true,
+		},
 		title: {
 			type: String,
 			required: true,
@@ -11,7 +15,7 @@ const MemrySchema = new Schema(
 			type: String,
 			required: true,
 		},
-		private: {
+		privacy: {
 			type: Boolean,
 			default: false,
 		},
